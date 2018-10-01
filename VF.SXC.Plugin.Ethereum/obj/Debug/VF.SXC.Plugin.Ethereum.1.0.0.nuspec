@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>VF.SXC.Plugin.Ethereum</id>
+    <version>1.0.0</version>
+    <authors>Sitecore</authors>
+    <owners>Sitecore</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>http://www.sitecore.net/platform/pricing.aspx</licenseUrl>
+    <projectUrl>http://www.sitecore.net/</projectUrl>
+    <iconUrl>http://www.sitecore.net/favicon.ico</iconUrl>
+    <description>Sitecore Commerce Sample Plugin Template</description>
+    <tags>Commerce Sample Plugin</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.6.2">
+        <dependency id="VF.SXC.Plugin.Ethereum.Composer.TemplateGenerator" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="Nethereum.Portable" version="2.5.1" exclude="Build,Analyzers" />
+        <dependency id="Sitecore.Commerce.Core" version="2.2.29" exclude="Build,Analyzers" />
+        <dependency id="Sitecore.Commerce.Plugin.Catalog" version="2.2.46" exclude="Build,Analyzers" />
+        <dependency id="Sitecore.Commerce.Plugin.Composer" version="2.2.29" exclude="Build,Analyzers" />
+        <dependency id="Sitecore.Commerce.Plugin.Customers" version="2.2.10" exclude="Build,Analyzers" />
+        <dependency id="Sitecore.Commerce.Plugin.Orders" version="2.2.22" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <contentFiles>
+      <files include="any/net462/ConfigureSitecore.cs" buildAction="Content" />
+      <files include="any/net462/Pipelines/Blocks/AddProductToBlockchainIdentity.cs" buildAction="Content" />
+      <files include="any/net462/Policies/EthereumClientPolicy.cs" buildAction="Content" />
+    </contentFiles>
+  </metadata>
+  <files>
+    <file src="C:\Users\Vasiliy.Fomichev\source\repos\VF.SXC.Plugin.Ethereum\VF.SXC.Plugin.Ethereum\bin\Debug\net462\VF.SXC.Plugin.Ethereum.dll" target="lib\net462\VF.SXC.Plugin.Ethereum.dll" />
+    <file src="C:\Users\Vasiliy.Fomichev\source\repos\VF.SXC.Plugin.Ethereum\VF.SXC.Plugin.Ethereum\ConfigureSitecore.cs" target="content\ConfigureSitecore.cs" />
+    <file src="C:\Users\Vasiliy.Fomichev\source\repos\VF.SXC.Plugin.Ethereum\VF.SXC.Plugin.Ethereum\ConfigureSitecore.cs" target="contentFiles\any\net462\ConfigureSitecore.cs" />
+    <file src="C:\Users\Vasiliy.Fomichev\source\repos\VF.SXC.Plugin.Ethereum\VF.SXC.Plugin.Ethereum\Pipelines\Blocks\AddProductToBlockchainIdentity.cs" target="content\Pipelines\Blocks\AddProductToBlockchainIdentity.cs" />
+    <file src="C:\Users\Vasiliy.Fomichev\source\repos\VF.SXC.Plugin.Ethereum\VF.SXC.Plugin.Ethereum\Pipelines\Blocks\AddProductToBlockchainIdentity.cs" target="contentFiles\any\net462\Pipelines\Blocks\AddProductToBlockchainIdentity.cs" />
+    <file src="C:\Users\Vasiliy.Fomichev\source\repos\VF.SXC.Plugin.Ethereum\VF.SXC.Plugin.Ethereum\Policies\EthereumClientPolicy.cs" target="content\Policies\EthereumClientPolicy.cs" />
+    <file src="C:\Users\Vasiliy.Fomichev\source\repos\VF.SXC.Plugin.Ethereum\VF.SXC.Plugin.Ethereum\Policies\EthereumClientPolicy.cs" target="contentFiles\any\net462\Policies\EthereumClientPolicy.cs" />
+  </files>
+</package>

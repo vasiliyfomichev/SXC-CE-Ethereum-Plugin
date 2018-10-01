@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Sitecore Commerce Sample Plugin Template</Description>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <Authors>Sitecore</Authors>
+    <TargetFramework>net462</TargetFramework>
+    <PackageTags>$(PackageTags);Commerce;Sample;Plugin</PackageTags>
+    <PackageIconUrl>http://www.sitecore.net/favicon.ico</PackageIconUrl>
+    <PackageProjectUrl>http://www.sitecore.net/</PackageProjectUrl>
+    <PackageLicenseUrl>http://www.sitecore.net/platform/pricing.aspx</PackageLicenseUrl>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Pipelines\Blocks\AddDigitalDownloadBlockchainToken.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nethereum.Portable" Version="2.5.1" />
+    <PackageReference Include="Sitecore.Commerce.Core">
+      <Version>2.2.*</Version>
+    </PackageReference>
+    <PackageReference Include="Sitecore.Commerce.Plugin.Catalog" Version="2.2.46" />
+    <PackageReference Include="Sitecore.Commerce.Plugin.Composer" Version="2.2.29" />
+    <PackageReference Include="Sitecore.Commerce.Plugin.Customers" Version="2.2.10" />
+    <PackageReference Include="Sitecore.Commerce.Plugin.Orders" Version="2.2.22" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ConfigureSitecore.cs" />
+    <Content Include="Pipelines\Blocks\AddProductToBlockchainIdentity.cs" />
+    <Content Include="Policies\EthereumClientPolicy.cs" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
+    <Reference Include="System.Transactions" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VF.SXC.Plugin.Ethereum.Composer.TemplateGenerator\VF.SXC.Plugin.Ethereum.Composer.TemplateGenerator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\data\Environments\" />
+  </ItemGroup>
+</Project>

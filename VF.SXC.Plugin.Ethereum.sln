@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VF.SXC.Plugin.Ethereum", "VF.SXC.Plugin.Ethereum\VF.SXC.Plugin.Ethereum.csproj", "{F928B948-7D9C-4EFA-BE61-39B050D6D5CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VF.SXC.Plugin.Ethereum.Composer.TemplateGenerator", "VF.SXC.Plugin.Ethereum.Composer.TemplateGenerator\VF.SXC.Plugin.Ethereum.Composer.TemplateGenerator.csproj", "{EC69F743-CB09-4217-BA2D-D5D24833E16D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{29D561DD-B612-428D-93ED-3A04EFB32038}"
+	ProjectSection(SolutionItems) = preProject
+		Contracts\MyEthIdentity.sol = Contracts\MyEthIdentity.sol
+		Contracts\MyEthLoyalty.sol = Contracts\MyEthLoyalty.sol
+		Contracts\MyEthRoyalty.sol = Contracts\MyEthRoyalty.sol
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F928B948-7D9C-4EFA-BE61-39B050D6D5CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F928B948-7D9C-4EFA-BE61-39B050D6D5CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F928B948-7D9C-4EFA-BE61-39B050D6D5CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F928B948-7D9C-4EFA-BE61-39B050D6D5CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC69F743-CB09-4217-BA2D-D5D24833E16D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC69F743-CB09-4217-BA2D-D5D24833E16D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC69F743-CB09-4217-BA2D-D5D24833E16D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC69F743-CB09-4217-BA2D-D5D24833E16D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24D28E2E-A36C-4695-98AA-2526FCC8D807}
+	EndGlobalSection
+EndGlobal

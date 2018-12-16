@@ -48,12 +48,15 @@
 
             // Getting customer id contract
             var contactComponent = order.GetComponent<ContactComponent>();
-            if (contactComponent == null)
+            if (contactComponent == null || !contactComponent.IsRegistered)
             {
                 return order;
             }
             var getCustomerCommand = new GetCustomerCommand(_getCustomerPipeline, _serviceProvider);
-            var customer = await getCustomerCommand.Process(context.CommerceContext, (contactComponent.CustomerId.ToLower().StartsWith("entity") ? contactComponent.CustomerId : CommerceEntity.IdPrefix<Customer>() + contactComponent.CustomerId));
+            var customerId = (contactComponent.CustomerId.ToLower().StartsWith("entity") ? contactComponent.CustomerId : CommerceEntity.IdPrefix<Customer>() + contactComponent.CustomerId);
+            if (string.IsNullOrWhiteSpace(customerId))
+                return order;
+            var customer = await getCustomerCommand.Process(context.CommerceContext, customerId);
             var customerDetails = customer.GetComponent<CustomerDetailsComponent>();
                         if (!(customerDetails.View.ChildViews.Where(v => v.Name.ToLower() == Constants.Pipelines.Views.BlockchainInformationViewName.ToLower()).FirstOrDefault() is EntityView blockchainView))
                 return order;

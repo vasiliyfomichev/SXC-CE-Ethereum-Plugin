@@ -5,6 +5,7 @@ namespace VF.SXC.Plugin.Ethereum.Pipelines.Blocks
     using Microsoft.Extensions.Logging;
     using Nethereum.Hex.HexTypes;
     using Nethereum.RPC.Eth.DTOs;
+    using Nethereum.Util;
     using Nethereum.Web3;
     using Sitecore.Commerce.Core;
     using Sitecore.Commerce.EntityViews;
@@ -38,12 +39,18 @@ namespace VF.SXC.Plugin.Ethereum.Pipelines.Blocks
 
             // Getting the blockchain contract address
             var contactComponent = order.GetComponent<ContactComponent>();
-            if (contactComponent == null)
+            if (contactComponent == null || !contactComponent.IsRegistered)
             {
                 return order;
             }
+
+
             var getCustomerCommand = new GetCustomerCommand(_getCustomerPipeline, _serviceProvider);
-            var customer = await getCustomerCommand.Process(context.CommerceContext, (contactComponent.CustomerId.ToLower().StartsWith("entity") ? contactComponent.CustomerId : CommerceEntity.IdPrefix<Customer>() + contactComponent.CustomerId));
+
+            var customerId = (contactComponent.CustomerId.ToLower().StartsWith("entity") ? contactComponent.CustomerId : CommerceEntity.IdPrefix<Customer>() + contactComponent.CustomerId);
+            if (string.IsNullOrWhiteSpace(customerId))
+                return order;
+            var customer = await getCustomerCommand.Process(context.CommerceContext, customerId);
             var customerDetails = customer.GetComponent<CustomerDetailsComponent>();
 
             if (!(customerDetails.View.ChildViews.Where(v => v.Name.ToLower() == Constants.Pipelines.Views.BlockchainInformationViewName.ToLower()).FirstOrDefault() is EntityView blockchainView))
@@ -77,9 +84,14 @@ namespace VF.SXC.Plugin.Ethereum.Pipelines.Blocks
 
             try
             {
-                // TODO: check why we cannot specify the customer's account for the second parameter
-                var gasEstimate = await addLoyaltyPointsFunction.EstimateGasAsync(ethPolicy.MerchantAccountAddress, new HexBigInteger(200000), new HexBigInteger(decimal.Round(orderSubtotal).ToString()), orderSubtotal, ethPolicy.MerchantAccountAddress);
-                var hash = await addLoyaltyPointsFunction.SendTransactionAsync(new TransactionInput { Gas = gasEstimate, From = ethPolicy.MerchantAccountAddress, Value= new HexBigInteger(decimal.Round(orderSubtotal).ToString()) }, orderSubtotal, ethPolicy.MerchantAccountAddress);
+                // TODO: this implementation uses a separate loyalty contract balance, potntial discrepancies over time with bank depletion
+                var usdPerEth = await UpdateEthBalanceOnEntityView.GetUsdAmountAsync(1, context);
+
+                var subtotalInWei = UnitConversion.Convert.ToWei((orderSubtotal / usdPerEth), UnitConversion.EthUnit.Ether);
+                var loyaltyEstimatedAmount = UnitConversion.Convert.ToWei(((orderSubtotal / usdPerEth)/100), UnitConversion.EthUnit.Ether);
+                // validating the royalty contract amount by passing precalculated value (1%)
+                var gasEstimate = await addLoyaltyPointsFunction.EstimateGasAsync(ethPolicy.MerchantAccountAddress, new HexBigInteger(200000), new HexBigInteger(loyaltyEstimatedAmount), subtotalInWei, contractIdProperty.RawValue.ToString());
+                var hash = await addLoyaltyPointsFunction.SendTransactionAsync(new TransactionInput { Gas = new HexBigInteger(gasEstimate), From = ethPolicy.MerchantAccountAddress, Value= new HexBigInteger(loyaltyEstimatedAmount) }, subtotalInWei, contractIdProperty.RawValue.ToString());
             }
             catch (Exception ex)
             {
